@@ -1,11 +1,12 @@
 class PrototypesController < ApplicationController
-  before_action :authenticate_user!, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:edit, :update, :destroy, :new]
   before_action :move_to_index, except: [:index, :show]
   def index
     @prototypes = Prototype.all
   end
 
   def new
+    redirect_to new_user_session_path unless user_signed_in?
     @prototype = Prototype.new
   end
 
