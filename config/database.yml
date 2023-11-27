@@ -10,24 +10,29 @@
 #   https://dev.mysql.com/doc/refman/5.7/en/password-hashing.html
 #
 default: &default
-  adapter: mysql2
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password:
-  socket: /tmp/mysql.sock
 
 development:
   <<: *default
-  database: protospace_39829_development
+  adapter: mysql2
+  username: root
+  password:
+  host: localhost
+  database: protospace-39829
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: protospace_39829_test
+  adapter: mysql2
+  username: root
+  password:
+  host: localhost
+  database: protospace-39829
 
+production:
+  <<: *default
+  adapter: postgresql
+  url: <%= ENV['DATABASE_URL'] %>
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
 # ever seen by anyone, they now have access to your database.
@@ -48,8 +53,3 @@ test:
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
-production:
-  <<: *default
-  database: protospace_39829_production
-  username: protospace_39829
-  password: <%= ENV["PROTOSPACE_39829_DATABASE_PASSWORD"] %>
